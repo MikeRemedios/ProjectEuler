@@ -110,7 +110,7 @@ std::vector<T> GetPrimeFactors(T n)
 		n /= 2;
 	}
 
-	for (int i = 3; i <= sqrt(n); i = i + 2)
+	for (int i = 3; i * i <= n; i += 2)
 	{
 		// While i divides n, push i and divide n
 		while (n%i == 0)
@@ -161,6 +161,7 @@ bool IsPalindrome(T p)
 	return true;
 }
 
+//Find the largest palindrome made from the product of two 3-digit numbers.
 int Question4()
 {
 	//go by each hundred probably?
@@ -176,8 +177,13 @@ int Question4()
 	}
 }
 
+//What is the smallest positive number that is 
+//evenly divisible by all of the numbers from 1 to 20?
 unsigned long long Question5()
 {
+	//requires prime factorization of all numbers from 1-20 combined with no extras
+	//ie 2 * 2 * 5 contains prime factors for 2, 4, 10, 20
+
 	std::vector<int> primeFactors;
 	for (int i = 2; i <= 20; ++i)
 	{
