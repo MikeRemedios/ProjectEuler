@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <iterator>
+#include "Util.h"
 
 /*
 * If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -46,98 +47,13 @@ int Question2()
 	return total;
 }
 
-template <typename T>
-bool IsPrime(T p)
-{
-
-	if (p == 2)
-	{
-		return true;
-	}
-	else if (p % 2 == 0 || p == 1)
-	{
-		return false;
-	}
-	else 
-	{
-		for (T i = 3; i * i < p; i += 2)
-		{
-			if (p % i == 0)
-				return false;
-		}
-	}
-	return true;
-}
-
-template <typename T>
-std::vector<T> GetFactors(T n)
-{
-	std::vector<T> factors;
-	for (T i = 1; i * i <= n; ++i)
-	{
-		if (n % i == 0)
-		{
-			factors.push_back(i);
-			factors.push_back(n / i);
-		}
-	}
-	std::sort(factors.begin(), factors.end());
-
-	return factors;
-}
-
-//template<typename T>
-//std::vector<T> GetPrimeFactors(T n)
-//{
-//	std::vector<T> factors = GetFactors(n);
-//	factors.erase(std::remove_if(factors.begin(),
-//								factors.end(), 
-//								[](T p) {	return !IsPrime(p);    }),
-//				factors.end());
-//
-//	for (auto i : factors)
-//		std::cout << i << " ";
-//	return factors;
-//}
-
-template<typename T>
-std::vector<T> GetPrimeFactors(T n)
-{
-	std::vector<T> primes;
-	while (n % 2 == 0)
-	{
-		primes.push_back(2);
-		n /= 2;
-	}
-
-	for (int i = 3; i * i <= n; i += 2)
-	{
-		// While i divides n, push i and divide n
-		while (n%i == 0)
-		{
-			primes.push_back(i);
-			n = n / i;
-		}
-	}
-
-	// This condition is to handle the case when n is a prime number
-	// greater than 2
-	if (n > 2)
-		primes.push_back(n);
-
-	std::sort(primes.begin(), primes.end());
-
-	return primes;
-
-}
-
 //What is the largest prime factor of the number 600851475143 ?
 int Question3()
 {
 	int largestPrime = 0;
 	for (auto i : GetFactors(600851475143))
 	{
-		if (IsPrime(i))
+		if (IsPrime2(i))
 		{
 			if (i > largestPrime)
 				largestPrime = i;
@@ -146,20 +62,7 @@ int Question3()
 	return largestPrime;
 }
 
-template<typename T>
-bool IsPalindrome(T p)
-{
-	std::string s = std::to_string(p);
-	int l = s.size();
 
-	for (int i = 0; i < l / 2; ++i)
-	{
-		if (s[i] != s[l - i - 1])
-			return false;
-	}
-
-	return true;
-}
 
 //Find the largest palindrome made from the product of two 3-digit numbers.
 int Question4()
@@ -200,11 +103,24 @@ unsigned long long Question5()
 	return total;
 }
 
+//Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+unsigned int Question6()
+{
+	unsigned int sumSquares = 0;
+	unsigned int squareSums = 0;
+
+	for (int i = 1; i <= 100; ++i)
+	{
+		squareSums += i;
+		sumSquares += (i * i);
+	}
+
+	return squareSums * squareSums - sumSquares;
+}
+
 int main()
 {
-
-	std::cout << Question5() << std::endl;
-
+	std::cout << Question3() << std::endl;
 
 	system("pause");
 	return 0;
